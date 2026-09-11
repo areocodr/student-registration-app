@@ -83,15 +83,8 @@ const mockStudents = [
     name: "David Adeyanju",
     department: "Law",
     status: "active",
-    registrationDate: "2026-04-223"
+    registrationDate: "2026-04-22"
  },
-  { 
-    id: "STU012", 
-    name: "David Adeyanju", 
-    department: "Law", 
-    status: "active", 
-    registrationDate: "2026-08-30" 
-}
 ];
 
 export default mockStudents;
