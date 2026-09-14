@@ -4,6 +4,7 @@ import StatCard from "./StatCard.jsx";
 import SearchBar from "./SearchBar.jsx";
 import RecentStudentsList from "./RecentStudentsList.jsx";
 import styles from './Dashboard.module.css';
+import {Link} from "react-router-dom";
 
 // no use state or useEffect needed here since we are not fetching data from an API or managing any state in this component. 
 // We are simply displaying the data from the mockStudents array.
@@ -20,7 +21,10 @@ function Dashboard() {
 
     return (
         <div className={styles.dashboard}>
-            <h2 className={styles.heading}>Dashboard</h2>
+            <div className={styles.headerRow}>
+                <h2 className={styles.heading}>Dashboard</h2>
+                <Link to="/students/register" className={styles.quickAction}> + Register New Student</Link>
+            </div>
 
             <div className={styles.statsGrid}>
                 <StatCard label="Total Students" value={totalStudents} />
@@ -31,7 +35,7 @@ function Dashboard() {
             <div className={styles.recentSection}>
                 <div className={styles.recentHeader}>
                     <h3>Recently Registered</h3>
-                    <SearchBar value={searchTerm} onChange={setSearchTerm} />//
+                    <SearchBar value={searchTerm} onChange={setSearchTerm} />
                 </div>
                 <RecentStudentsList students={filteredStudents} />
                 </div>
