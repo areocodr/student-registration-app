@@ -1,12 +1,23 @@
+import {useState} from "react";
 import mockStudents from "../../data/mockStudents.js";
-import StatCard from "./StatCard.jsx"
+import StatCard from "./StatCard.jsx";
+import SearchBar from "./SearchBar.jsx";
+import RecentStudentsList from "./RecentStudentsList.jsx";
 import styles from './Dashboard.module.css';
 
+// no use state or useEffect needed here since we are not fetching data from an API or managing any state in this component. 
+// We are simply displaying the data from the mockStudents array.
 function Dashboard() {
+    const [searchTerm, setSearchTerm] = useState(''); // State to hold the search term entered by the user, lifted up from SearchBar into Dashboard to manage the state of the search term and pass it down to the SearchBar component as a prop.
+
     const totalStudents = mockStudents.length;
     const activeCount = mockStudents.filter((s) => s.status === "active").length;
     const blacklistedCount = mockStudents.filter((s) => s.status === "blacklisted").length;
     
+    const recentStudents = [...mockStudents].sort((a, b) => new Date(b.registrationDate) - new Date(a.registrationDate)).slice(0, 5);
+
+    const filteredStudents = recentStudents.filter((student) => student.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
     return (
         <div className={styles.dashboard}>
             <h2 className={styles.heading}>Dashboard</h2>
@@ -16,8 +27,16 @@ function Dashboard() {
                 <StatCard label="Active Students" value={activeCount} />
                 <StatCard label="Blacklisted Students" value={blacklistedCount} />
             </div>
-        </div>
-    );  
+
+            <div className={styles.recentSection}>
+                <div className={styles.recentHeader}>
+                    <h3>Recently Registered</h3>
+                    <SearchBar value={searchTerm} onChange={setSearchTerm} />//
+                </div>
+                <RecentStudentsList students={filteredStudents} />
+                </div>
+            </div>
+       );  
 }
 
 export default Dashboard;
